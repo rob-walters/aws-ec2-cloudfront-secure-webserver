@@ -11,7 +11,7 @@ This project demonstrates how to deploy a secure web server on AWS using:
 
 ## Architecture
 
-
+![Architecture Diagram](ec2-cloudfront-architecture.png)
 ---
 
 ## Components
