@@ -10,8 +10,39 @@ This project demonstrates how to deploy a secure web server on AWS using:
 ---
 
 ## Architecture
+                 ┌───────────────────────────┐
+                 │      User (Browser)       │
+                 │                           │
+                 └──────────────┬────────────┘
+                                │
+                                ▼
+                 ┌───────────────────────────┐
+                 │     CloudFront (CDN)      │
+                 │                           │
+                 │ - Redirect HTTP → HTTPS   │
+                 └──────────────┬────────────┘
+                                │
+                           HTTP to EC2
+                                │
+                                ▼
+         ┌────────────────────────────────────────────────┐
+         │               EC2 Web Server                   │
+         │ (Amazon Linux 2 + Apache, serves port 80 only) │
+         └──────────────┬─────────────────────────────────┘
+                        │
+                        ▼
+         ┌────────────────────────────────────────────────┐
+         │        Security Group (Firewall Rules)         │
+         │ - SSH (22): My IP only                         │
+         │ - HTTP (80): 0.0.0.0/0 (Public Web Traffic)    │
+         └────────────────────────────────────────────────┘
+                        │
+                        ▼
+         ┌────────────────────────────────────────────────┐
+         │          AWS Backup (Daily Snapshots)          │
+         │ - Automated recovery point for EC2 instance    │
+         └────────────────────────────────────────────────┘
 
-![Architecture Diagram](ec2-cloudfront-architecture.png)
 ---
 
 ## Components
@@ -24,12 +55,11 @@ This project demonstrates how to deploy a secure web server on AWS using:
 ### **2. EC2 Web Server**
 - Amazon Linux 2
 - Apache Web Server (port 80)
-- Shows a simple HTML message served by EC2
+
 
 ### **3. Security Group (Firewall)**
 - SSH (22) → My IP only  
 - HTTP (80) → Public  
-Ensures maximum security for admin access.
 
 ### **4. AWS Backup**
 - Daily EC2 snapshots
@@ -45,7 +75,6 @@ Ensures maximum security for admin access.
 4. Created CloudFront distribution pointing to EC2
 5. Enabled HTTPS using CloudFront's default SSL certificate
 6. Configured automatic daily snapshots with AWS Backup
-7. Created project architecture diagram
 
 ---
 
@@ -55,5 +84,5 @@ Ensures maximum security for admin access.
 - How CloudFront provides HTTPS without owning a domain
 - How to configure Security Groups correctly
 - How to automate backups for resilience
-- How to build a real-world cloud architecture
+
 
