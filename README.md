@@ -2,8 +2,8 @@
 
 ## Overview
 ## Live Demo
-View the secure website here:  
-https://d3abcxyz123.cloudfront.net
+[Click here to view the secure website](https://d3abcxyz123.cloudfront.net)
+
 
 This project demonstrates how to deploy a secure web server on AWS using:
 - Amazon EC2 (web server)
